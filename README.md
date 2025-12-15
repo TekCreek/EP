@@ -1,5 +1,21 @@
 # Enterprise Programming 
 
+## Respository Setup 
+
+1. Install Git in your machine
+2. Git clone repository 
+
+```
+# Clone the repository 
+git clone https://github.com/sagaruppuluri/EP.git
+
+# Change to the EP directory
+cd EP
+
+# Below command to update the local repo with in the EP folder. 
+git pull origin main
+```
+
 ## Software Setup 
 
 1. Install IntelliJ IDEA (community edition)
