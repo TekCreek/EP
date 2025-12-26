@@ -3,7 +3,7 @@ package org.example;
 import java.util.*;
 
 // Iterator
-public class CollectionsEx5 {
+public class IteratorDemo1 {
 
     private static void display(Collection<Integer> col) {
 // // For each value in the collection.

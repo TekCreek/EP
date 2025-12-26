@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 // Display the word along with its frequency.
-public class CollectionsEx7 {
+public class TreeMapDemo1 {
     public static void main(String[] args) {
         String sentence = "this is sample sentence this is for map example";
         String [] words = sentence.split(" ");

@@ -3,7 +3,7 @@ package org.example;
 import java.util.TreeSet;
 
 // Remove duplicates
-public class CollectionsEx2 {
+public class TreeSetDemo1 {
     public static void main(String[] args) {
         int a[] = {30, 10, 20, 40, 10, 20, 10};
 

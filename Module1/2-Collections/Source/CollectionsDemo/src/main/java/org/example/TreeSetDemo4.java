@@ -10,7 +10,7 @@ import java.util.TreeSet;
  *      - If working with tree structures we need to implement Comparable interface
  *        or we need to provide Comparator.
  */
-public class CollectionsEx10 {
+public class TreeSetDemo4 {
     public static void main(String[] args) {
         // TreeSet<Student> students = new TreeSet<>(new StudentNumberComparator());
         TreeSet<Student> students = new TreeSet<>(new ScoreComparator());

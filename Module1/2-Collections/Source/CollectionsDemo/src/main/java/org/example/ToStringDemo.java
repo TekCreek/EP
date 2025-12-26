@@ -1,7 +1,7 @@
 package org.example;
 // toString() of the Object class.
 
-public class CollectionsEx3 {
+public class ToStringDemo {
     public static void main(String[] args) {
         Sample s = new Sample();
         System.out.println( s );

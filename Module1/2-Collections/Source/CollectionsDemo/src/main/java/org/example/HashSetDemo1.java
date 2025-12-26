@@ -10,7 +10,7 @@ import java.util.Objects;
  *      - If working with tree structures we need to implement Comparable interface
  *        or we need to provide Comparator.
  */
-public class CollectionsEx8 {
+public class HashSetDemo1 {
     public static void main(String[] args) {
         HashSet<Fruit> set = new HashSet<>();
 
