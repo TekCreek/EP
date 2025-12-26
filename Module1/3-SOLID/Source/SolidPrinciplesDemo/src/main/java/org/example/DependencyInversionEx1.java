@@ -1,3 +1,5 @@
+package org.example;
+
 /**
  * SOLID Principles -
  * SOLID is an acronym for the first five object-oriented design (OOD)

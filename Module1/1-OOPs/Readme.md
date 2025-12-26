@@ -621,4 +621,18 @@ i.e. the binding in other words linking to the actual definition is delayed till
         b2.g(); // g() in Base
         b2.h(); // h() in Derived
 
-```        
+```       
+
+## Summary 
+
+Object-Oriented Programming (OOP) relies on four core principles: encapsulation, inheritance, abstraction, and polymorphism. These principles enable modular, reusable, and maintainable code by modeling real-world entities as objects.
+
+1. **Encapsulation**: Encapsulation bundles data and methods within a class, restricting direct access to internal details using access modifiers like private or public. This protects object state and exposes only necessary interfaces.
+
+2. **Inheritance**: Allows a new class (subclass) to inherit properties and behaviors from an existing class (superclass), promoting code reuse.
+
+3. **Abstraction**: Abstraction hides complex implementation details behind simple interfaces, letting users interact with high-level methods without knowing internals. Abstract classes or interfaces enforce this.
+
+4. **Polymorphism**: Polymorphism enables objects of different classes to be treated uniformly through a common interface, often via method overriding or overloading. This supports flexibility, like different shapes sharing a "draw" method.
+
+By leveraging these OOP principles, developers can create software that is easier to understand, extend, and maintain over time.
