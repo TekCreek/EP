@@ -46,7 +46,7 @@ class AccountService {
 }
 
 // Usage with dependency injection
-public class SolidEx1 {
+public class SingleResponsibilityDemo {
     public static void main(String[] args) {
 
         Account account = new Account();

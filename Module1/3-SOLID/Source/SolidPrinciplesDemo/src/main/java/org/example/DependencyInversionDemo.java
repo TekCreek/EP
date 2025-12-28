@@ -69,7 +69,7 @@ class ProtocolHandlerFactory {
 // --------------------------------------------------------------------
 
 
-public class DependencyInversionEx1 {
+public class DependencyInversionDemo {
     public static void main(String[] args) {
         MyMessenger messenger = new MyMessenger("UDP");
         messenger.send("a", "SOLID is easy");

@@ -45,7 +45,7 @@ class Car extends Vehicle {
     }
 }
 
-public class LiskovSubstitutionEx1 {
+public class LiskovSubstitutionDemo {
 
     static void testDrive(Vehicle vehicle) {
         vehicle.start();

@@ -35,7 +35,7 @@ class ArrayUtil {
     }
 }
 
-public class OpenClosedEx1 {
+public class OpenClosedDemo {
     public static void main(String[] args) {
         int arr[] = {1, 5, 4, 2, 3};
         ArrayUtil.sort(arr, new DescComparator());

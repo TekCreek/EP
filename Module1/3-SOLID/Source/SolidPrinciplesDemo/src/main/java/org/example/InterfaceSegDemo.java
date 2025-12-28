@@ -47,7 +47,7 @@ class XYZRestaurant implements VegRestaurant, NonVegRestaurant {
     }
 }
 
-public class InterfaceSegEx1 {
+public class InterfaceSegDemo {
     public static void main(String[] args) {
 
     }
