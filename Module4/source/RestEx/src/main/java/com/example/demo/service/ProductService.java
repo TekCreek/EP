@@ -7,6 +7,10 @@ import com.example.demo.service.ServiceLayerException;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +24,16 @@ public class ProductService {
     public List<Product> findAll() {
         return productRepository.findAll();
     }
+
+    public Page<Product> getProductsSorted(int page, int size, String sortBy, String direction) {
+        Sort sort = direction.equalsIgnoreCase("DESC") 
+            ? Sort.by(sortBy).descending() 
+            : Sort.by(sortBy).ascending();
+        
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return productRepository.findAll(pageable);
+    }
+    
 
     public Product findById(long productId) throws ServiceLayerException {
         Optional<Product> dbProduct = productRepository.findById(productId);

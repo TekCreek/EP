@@ -5,6 +5,7 @@ import com.example.demo.model.ProductSearch;
 import com.example.demo.service.ProductService;
 import com.example.demo.service.ServiceLayerException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,14 @@ public class ProductController {
     @GetMapping
     public List<Product> getAllProducts() {
         return productService.findAll();
+    }
+
+    @GetMapping("/sorted")
+    public Page<Product> getProductsSorted(@RequestParam(defaultValue = "0") int page,
+                                           @RequestParam(defaultValue = "10") int size,
+                                           @RequestParam(defaultValue = "id") String sortBy,
+                                           @RequestParam(defaultValue = "ASC") String direction) {
+        return productService.getProductsSorted(page, size, sortBy, direction);
     }
 
     @GetMapping("/{id}")

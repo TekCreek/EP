@@ -86,3 +86,17 @@ curl -X POST http://localhost:8080/api/v1/products/find \
   "pattern":"phone"
 }'
 ```
+
+7. Get paginated and sorted products:
+
+```bash
+curl -X GET "http://localhost:8080/api/v1/products/sorted?page=0&size=2&sortBy=price&direction=DESC"
+``` 
+
+```bash
+curl -X GET "http://localhost:8080/api/v1/products/sorted?page=0&size=2&sortBy=name&direction=ASC"
+``` 
+
+```bash
+curl -X GET "http://localhost:8080/api/v1/products/sorted?page=1&size=2"
+``` 
