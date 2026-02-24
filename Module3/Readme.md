@@ -621,7 +621,7 @@ public class ProductController {
 
 #### 3. @PathVariable
 
-Path variables for dynamic URL segments. These values are extracted from the URL and passed as method parameters. The name in `@PathVariable` should match the placeholder in the URL.
+Path variables for dynamic URL segments. These values are extracted from the URL and passed as method parameters. The name in `@PathVariable` should match the placeholder in the URL. Path variables are required by default, but you can make them optional by setting `required=false` and providing a default value. 
 
 ```java
 // GET /api/users/123
@@ -642,6 +642,7 @@ public Order getOrder(
 #### 4. @RequestParam
 
 Query parameters are passed in the URL after the `?` and are used to filter or modify the request. They are optional by default, but you can make them required. 
+Request parameters are typically used for filtering, pagination, or any additional data that doesn't fit well in the URL path. You can also provide default values for request parameters if they are not provided by the client.
 
 ```java
 // GET /api/search?keyword=java&page=1
@@ -662,7 +663,7 @@ public List<Item> filter(
 
 #### 5. @RequestBody
 
-Request body is used to pass complex objects in the request payload, typically in JSON format. Spring automatically deserializes the JSON into the specified Java object. 
+Request body is used to pass complex objects in the request payload, typically in JSON format. Spring automatically deserializes the JSON into the specified Java object. Request body is commonly used in POST and PUT requests to create or update resources. You can also use `@Valid` with `@RequestBody` to trigger validation of the incoming data based on constraints defined in the model class.
 
 ```java
 @PostMapping("/users")
@@ -680,6 +681,7 @@ public User createUser(@RequestBody User user) {
 #### 6. @RequestHeader
 
 RequestHeader is used to access HTTP headers sent by the client. You can specify the header name and Spring will inject its value into the method parameter.
+Request headers are often used for authentication tokens, content type, user agent information, and other metadata about the request. You can also set default values for headers if they are not provided by the client.
 
 ```java
 @GetMapping("/info")
@@ -1086,7 +1088,7 @@ public class UserController {
 
 #### 5. Version Your API
 
-API versioning allows you to make changes to your API without breaking existing clients. You can version your API using the URL, request header, or query parameter. URL versioning is the most common and straightforward approach, where you include the version number in the URI path. This makes it clear to clients which version of the API they are using and allows you to maintain multiple versions simultaneously. Alternatively you can use header versioning or query parameter versioning, but these approaches can be less visible to clients and may require additional documentation to ensure proper usage.
+API versioning allows you to make changes to your API without breaking existing clients. You can version your API using the URL, request header, or query parameter. URL versioning is the most common and straightforward approach, where you include the version number in the URI path. This makes it clear to clients which version of the API they are using and allows you to maintain multiple versions simultaneously. 
 
 ```java
 @RestController
@@ -1095,6 +1097,8 @@ public class ProductController {
     // ...
 }
 ```
+
+Note: Avoid using query parameters for versioning, as it can be less intuitive and may lead to confusion for clients. Header-based versioning can be more flexible but requires clients to set the appropriate headers, which may not be as straightforward as URL versioning. Hence URL versioning is often preferred for its simplicity and clarity.
 
 ### Quick Reference (For understanding purposes)
 

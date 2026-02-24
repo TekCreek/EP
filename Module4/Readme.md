@@ -142,6 +142,8 @@ JDBC (Java Database Connectivity) is an API in Java that allows applications to 
 
 ### JDBC Architecture
 
+ApplicationLayer is the top layer where your Java application code resides. It interacts with the JDBC API to perform database operations. The JDBC API provides a set of interfaces and classes that allow you to connect to a database, execute SQL statements, and process the results. The JDBC Driver Manager is responsible for managing the database drivers and establishing connections to the database. The JDBC Driver is a specific implementation that allows Java applications to communicate with a particular database (e.g., MySQL Connector/J for MySQL, PostgreSQL JDBC Driver for PostgreSQL). Finally, the Database is the underlying relational database management system (RDBMS) that stores and manages the data.
+
 ```
  Application Layer
       ↓
@@ -155,15 +157,15 @@ JDBC (Java Database Connectivity) is an API in Java that allows applications to 
 ```
 
 **JDBC Components:**
-- **DriverManager**: Manages driver connections
-- **Connection**: Database connection
+- **DriverManager**: Responsible for managing database drivers and establishing connections.
+- **Connection**: Connection object represents a connection to the database and is used to create statements and manage transactions.
 - **Statement**: Execute SQL
-- **PreparedStatement**: Precompiled SQL with parameters (recommended)
+- **PreparedStatement**: Precompiled SQL with parameters (*recommended*)
 - **CallableStatement**: Execute stored procedures
-- **ResultSet**: Query results
-- **SQLException**: Database errors
+- **ResultSet**: Result of a query execution, allowing you to iterate through the results and retrieve data.
+- **SQLException**: Indicates an error occurred while interacting with the database.
 
-### JDBC Basics
+### General JDBC Workflow
 
 Below are the basic steps to use JDBC for database operations:
 
@@ -262,6 +264,8 @@ ResultSet resultSet = preparedStatement.executeQuery();
 Here the PreparedStatement treats the user input as a string literal, preventing the malicious input from being executed as part of the SQL query.
 
 ### Transactions with JDBC
+
+AutoCommit mode is enabled by default in JDBC, which means that each SQL statement is treated as a separate transaction and is automatically committed after execution. To manage transactions manually, you can disable auto-commit mode and use the commit() and rollback() methods of the Connection object to control when transactions are committed or rolled back. Once you disable auto-commit mode, you need to explicitly call commit() to save changes to the database or rollback() to undo changes if an error occurs. It is important to handle exceptions properly and ensure that transactions are rolled back in case of errors to maintain data integrity.
 
 ```java
 try {
