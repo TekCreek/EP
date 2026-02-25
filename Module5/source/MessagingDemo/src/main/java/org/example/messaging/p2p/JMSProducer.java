@@ -1,4 +1,4 @@
-package org.example.messaging;
+package org.example.messaging.p2p;
 
 import javax.jms.*;
 import org.apache.activemq.ActiveMQConnectionFactory;
@@ -23,12 +23,14 @@ public class JMSProducer {
             MessageProducer producer = session.createProducer(destination);
             producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
 
-            // Create a text message
-            TextMessage message = session.createTextMessage("Hello, JMS!");
+            for (int i = 1; i <= 10 ; i++) {
+                // Create a text message
+                TextMessage message = session.createTextMessage("Hello Message - " + i );
 
-            // Send the message
-            producer.send(message);
-            System.out.println("Sent message: " + message.getText());
+                // Send the message
+                producer.send(message);
+                System.out.println("Sent message: " + message.getText());
+            }
 
             // Clean up
             producer.close();
