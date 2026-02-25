@@ -1,14 +1,7 @@
 
 ## How to run?
 
-```
-## Move to the project folder in the terminal.
-## then 
 
-cd docker
-
-## to bring up the active mq image 
-
-docker compose up -d
-
-```
+## Prerequisites:
+1. Docker installed and running on your machine.
+2. ActiveMQ image available in your Docker environment. Use the docker folder in the source folder to set up the ActiveMQ image.
