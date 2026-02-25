@@ -1,0 +1,45 @@
+name: messaging-stack
+
+services:
+  activemq:
+    image: apache/activemq-classic:5.18.3
+    container_name: activemq
+    restart: unless-stopped
+    ports:
+      - "61616:61616"   # OpenWire (JMS)
+      - "61613:61613"   # STOMP
+      - "61614:61614"   # STOMP over WebSocket
+      - "1883:1883"     # MQTT
+      - "5672:5672"     # AMQP
+      - "8161:8161"     # Web Console (Admin UI)
+    environment:
+      ACTIVEMQ_OPTS: >-
+        -Xms512m
+        -Xmx1g
+        -Djetty.host=0.0.0.0
+        -Dactivemq.data=/opt/activemq/data
+        -Dactivemq.conf=/opt/activemq/conf
+    volumes:
+      - ./config/activemq.xml:/opt/activemq/conf/activemq.xml:ro
+      - ./config/jetty-realm.properties:/opt/activemq/conf/jetty-realm.properties:ro
+      - ./config/log4j2.properties:/opt/activemq/conf/log4j2.properties:ro
+      - ./vol/activemq-data:/opt/activemq/data
+      - ./vol/activemq-logs:/opt/activemq/logs
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf -u admin:admin http://localhost:8161/admin/ || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+    networks:
+      - activemq-net
+
+volumes:
+  activemq-data:
+    driver: local
+  activemq-logs:
+    driver: local
+
+networks:
+  activemq-net:
+    driver: bridge

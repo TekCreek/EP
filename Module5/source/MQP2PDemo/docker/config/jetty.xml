@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<!--
+    Jetty Configuration for ActiveMQ Web Console
+    Admin UI available at: http://localhost:8161/admin
+    Default credentials: admin / admin (defined in jetty-realm.properties)
+-->
+<Configure id="Server" class="org.eclipse.jetty.server.Server">
+
+    <Call name="addConnector">
+        <Arg>
+            <New class="org.eclipse.jetty.server.ServerConnector">
+                <Arg>
+                    <Ref refid="Server"/>
+                </Arg>
+                <Set name="host">${jetty.host}</Set>
+                <Set name="port">8161</Set>
+            </New>
+        </Arg>
+    </Call>
+
+    <New id="Handlers" class="org.eclipse.jetty.server.handler.HandlerCollection">
+        <Set name="handlers">
+            <Array type="org.eclipse.jetty.server.Handler">
+                <Item>
+                    <New id="Contexts" class="org.eclipse.jetty.server.handler.ContextHandlerCollection"/>
+                </Item>
+                <Item>
+                    <New id="DefaultHandler" class="org.eclipse.jetty.server.handler.DefaultHandler"/>
+                </Item>
+            </Array>
+        </Set>
+    </New>
+
+    <Set name="handler">
+        <Ref refid="Handlers"/>
+    </Set>
+
+    <New id="DeploymentManager" class="org.eclipse.jetty.deploy.DeploymentManager">
+        <Set name="contexts">
+            <Ref refid="Contexts"/>
+        </Set>
+        <Call name="setContextAttribute">
+            <Arg>org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern</Arg>
+            <Arg>.*/[^/]*servlet-api-[^/]*\.jar$|.*/javax.servlet.jsp.jstl-.*\.jar$|.*/[^/]*taglibs.*\.jar$</Arg>
+        </Call>
+
+        <Call name="addAppProvider">
+            <Arg>
+                <New class="org.eclipse.jetty.deploy.providers.WebAppProvider">
+                    <Set name="monitoredDirName">${activemq.home}/webapps</Set>
+                    <Set name="scanInterval">0</Set>
+                    <Set name="extractWars">true</Set>
+                </New>
+            </Arg>
+        </Call>
+    </New>
+    <Ref refid="DeploymentManager"/>
+
+    <!--  Enable JMX  -->
+    <New id="MBeanContainer" class="org.eclipse.jetty.jmx.MBeanContainer">
+        <Arg>
+            <Call class="java.lang.management.ManagementFactory" name="getPlatformMBeanServer"/>
+        </Arg>
+    </New>
+
+    <Get id="EventListeners" name="eventListeners"/>
+
+    <Call name="addEventListener">
+        <Arg><Ref refid="MBeanContainer"/></Arg>
+    </Call>
+
+    <Call name="addBean">
+        <Arg><Ref refid="MBeanContainer"/></Arg>
+    </Call>
+
+</Configure>
