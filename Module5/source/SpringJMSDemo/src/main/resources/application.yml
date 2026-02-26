@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: MessagingDemo
+  activemq:
+    broker-url: tcp://localhost:61616
+    user: publisher
+    password: publisher123
+    pool:
+      enabled: true
+      max-connections: 10
+  jms:
+    template:
+      default-destination: queue.orders
+      delivery-mode: persistent
+    listener:
+      acknowledge-mode: auto
