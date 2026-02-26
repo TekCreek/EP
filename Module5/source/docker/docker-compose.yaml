@@ -1,4 +1,4 @@
-name: messaging-stack
+name: ep-stack
 
 services:
   activemq:
@@ -33,6 +33,18 @@ services:
       start_period: 40s
     networks:
       - activemq-net
+
+  mysql-server-80:
+    image: mysql/mysql-server:8.0
+    volumes:
+      - ./vol/db:/var/lib/mysql
+      - ./vol/docker-entrypoint-initdb.d/:/docker-entrypoint-initdb.d/
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_ROOT_HOST=% 
+
 
 volumes:
   activemq-data:
