@@ -707,6 +707,10 @@ docker stop <container_id> # Stop a running container
 docker rm <container_id> # Remove a container
 
 docker rmi <image_id> # Remove a Docker image
+
+docker logs <container_id> # View logs of a container
+
+docker exec -it <container_id> bash # Access the shell of a running container
 ```
 
 ### Example of containerizing a Spring Boot application using Docker and setting up a CI pipeline with Jenkins:
