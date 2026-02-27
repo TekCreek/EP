@@ -1,35 +1,14 @@
 name: ep-stack
 
 services:
-  ## Use the docker folder under source/ to launching the mysql container.
-  # mysql-server-80:
-  #   image: mysql/mysql-server:8.0
-  #   volumes:
-  #     - ./vol/db:/var/lib/mysql
-  #     - ./vol/docker-entrypoint-initdb.d/:/docker-entrypoint-initdb.d/
-  #   environment:
-  #     MYSQL_DATABASE: sampledb
-  #     MYSQL_ROOT_PASSWORD: password
-  #   ports:
-  #     - "3306:3306"
-  #   healthcheck:
-  #     test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
-  #     interval: 10s
-  #     timeout: 5s
-  #     retries: 5
-  #   user:
-  #     mysql
-
   app:
     build:
       context: ..
       dockerfile: Dockerfile
-    depends_on:
-      - mysql
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/sampledb
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: password
+      # SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/sampledb
+      # SPRING_DATASOURCE_USERNAME: root
+      # SPRING_DATASOURCE_PASSWORD: password
       JWT_SECRET: your_jwt_secret_key_2025_used_for_securing_jwt
     ports:
       - "8080:8080"

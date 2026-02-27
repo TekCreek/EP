@@ -2,6 +2,7 @@ package com.example.demo.api;
 
 import com.example.demo.entity.Product;
 import com.example.demo.model.ProductSearch;
+import com.example.demo.model.ProductVO;
 import com.example.demo.service.ProductService;
 import com.example.demo.service.ServiceLayerException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +13,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/api/v1/products")
 public class ProductController {
     @Autowired
     private ProductService productService;
 
     @GetMapping
-    public List<Product> getAllProducts() {
+    public List<ProductVO> getAllProducts() {
         return productService.findAll();
     }
 
@@ -34,16 +35,16 @@ public class ProductController {
 
 
     @PostMapping
-    public ResponseEntity<?> createProduct(@RequestBody Product product) {
+    public ResponseEntity<?> createProduct(@RequestBody ProductVO productVO) {
         try {
-            return ResponseEntity.ok(productService.save(product));
+            return ResponseEntity.ok(productService.save(productVO));
         } catch (ServiceLayerException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 
     @PostMapping("/find")
-    public List<Product> findProducts(@RequestBody ProductSearch productSearch) {
+    public List<ProductVO> findProducts(@RequestBody ProductSearch productSearch) {
         return productService.findProducts(productSearch);
 
     }

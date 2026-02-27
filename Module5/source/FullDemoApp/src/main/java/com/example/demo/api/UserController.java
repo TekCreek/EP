@@ -1,7 +1,6 @@
 package com.example.demo.api;
 
-import com.example.demo.entity.User;
-import com.example.demo.repository.UserRepository;
+import com.example.demo.model.UserVO;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -9,20 +8,21 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/v1/users")
 public class UserController {
    
     @Autowired
     UserService userService;
 
     @GetMapping
-    public List<User> getAllUsers() {
+    public List<UserVO> getAllUsers() {
         return userService.findAllUsers();
+
     }
 
-    @PostMapping
-    public String createUser(@RequestBody User user) {
-        userService.saveUser(user);
+    @PostMapping("/signup")
+    public String createUser(@RequestBody UserVO userVO) {
+        userService.saveUser(userVO);
         return "User created successfully";
     }
 }

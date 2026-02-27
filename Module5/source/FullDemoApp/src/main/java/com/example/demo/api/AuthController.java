@@ -1,6 +1,7 @@
 package com.example.demo.api;
 
 import com.example.demo.entity.User;
+import com.example.demo.model.UserVO;
 import com.example.demo.security.util.JwtUtil;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1/auth")
 public class AuthController {
     @Autowired
     private UserService userService;
@@ -27,7 +28,7 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestBody Map<String, String> body) {
         String username = body.get("username");
         String password = body.get("password");
-        Optional<User> userOpt = userService.findByUsername(username);
+        Optional<UserVO> userOpt = userService.findByUsername(username);
         if (userOpt.isPresent() && userOpt.get().getPassword().equals(password)) {
             String token = jwtUtil.generateToken(username);
             return ResponseEntity.ok(Collections.singletonMap("token", token));
