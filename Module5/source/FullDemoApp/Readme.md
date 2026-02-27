@@ -31,7 +31,7 @@
 
 
 ```shell
-    export TOKEN="eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJTYW1wbGUiLCJpYXQiOjE3NzIxNzQ4ODYsImV4cCI6MTc3MjE3ODQ4Nn0.Te73U3ls6J7vhjrkXWZNylLj4GqCVkHqxtymHIwXBgo1dJrNWmu5DUwV9tGDR-Dn"
+    export TOKEN="eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJTYW1wbGUiLCJpYXQiOjE3NzIxNzY1MjksImV4cCI6MTc3MjE4MDEyOX0.9Go-DNk8PWzRlPb0jxNhxS9IisW-SNNp12f788FV6DwT1QjHkWyO9ikhksCmH1YK"
      
     # Get all users (authentication required use the token obtained after login  
     curl -X GET http://localhost:8080/api/v1/users -H "Authorization: Bearer $TOKEN"
@@ -42,7 +42,7 @@
 ## CURL commands for Product Operations with JWT Token 
 
 ```shell
-    export TOKEN="eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJTYW1wbGUiLCJpYXQiOjE3NzIxNzU0ODAsImV4cCI6MTc3MjE3OTA4MH0.s8_sKrQpu-drJiabVUlBJ5a49E-l7_txyGXY-P9di1HVQ9FQnrfwkbKTT2F5E3C2"
+    export TOKEN="eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJTYW1wbGUiLCJpYXQiOjE3NzIxNzY1MjksImV4cCI6MTc3MjE4MDEyOX0.9Go-DNk8PWzRlPb0jxNhxS9IisW-SNNp12f788FV6DwT1QjHkWyO9ikhksCmH1YK"
 
     # Get all products (    
     curl -v -X GET http://localhost:8080/api/v1/products -H "Authorization: Bearer $TOKEN"

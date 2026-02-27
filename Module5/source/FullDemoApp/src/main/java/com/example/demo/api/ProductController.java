@@ -5,6 +5,8 @@ import com.example.demo.model.ProductSearch;
 import com.example.demo.model.ProductVO;
 import com.example.demo.service.ProductService;
 import com.example.demo.service.ServiceLayerException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +17,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/products")
 public class ProductController {
+
+    private Logger logger = LoggerFactory.getLogger(ProductController.class);
+
     @Autowired
     private ProductService productService;
 
     @GetMapping
     public List<ProductVO> getAllProducts() {
+        logger.info("Processing get all products request ");
         return productService.findAll();
     }
 
