@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    ================================================================
+    Log4j2 Configuration for SpringLoggingDemo
+    ================================================================
+    File: src/main/resources/log4j2.xml
+
+    Log4j2 uses this file automatically when on the classpath.
+    Spring Boot looks for: log4j2.xml, log4j2-spring.xml, log4j2.json, etc.
+
+    KEY CONCEPTS:
+      - Appenders : Define WHERE logs go (console, file, rolling file)
+      - Loggers   : Define WHAT gets logged (package-level control)
+      - Layouts   : Define HOW log messages are formatted
+      - Filters   : Define conditions for including/excluding log events
+
+    LOG LEVELS (from least to most verbose):
+      OFF < FATAL < ERROR < WARN < INFO < DEBUG < TRACE < ALL
+    ================================================================
+-->
+
+<Configuration status="WARN" monitorInterval="30">
+    <!--
+        status="WARN"       : Log4j2's own internal logging level
+        monitorInterval="30": Reload config every 30 seconds if changed (hot reload)
+    -->
+
+    <!-- ============================================================
+         PROPERTIES - Reusable variables across the configuration
+         ============================================================ -->
+    <Properties>
+        <!-- Log directory (can also be overridden via -DlogDir=... JVM arg) -->
+        <Property name="LOG_DIR">logs</Property>
+
+        <!-- Application name used in log filenames -->
+        <Property name="APP_NAME">spring-logging-demo</Property>
+
+        <!--
+
+             CONSOLE PATTERN FORMAT
+             %d  = timestamp          e.g. 2024-01-15 10:30:45.123
+             %p  = log level          e.g. INFO, DEBUG, ERROR
+             %-5p= left-pad level to 5 chars for alignment
+             %c  = logger name (class) e.g. com.demo.logging.controller.DemoController
+             %C{1} = short class name  e.g. DemoController
+             %t  = thread name
+             %m  = log message
+             %n  = newline
+             %ex = exception with stack trace
+             %highlight = ANSI color highlighting by level
+
+        -->
+        <Property name="CONSOLE_PATTERN">
+            %d{yyyy-MM-dd HH:mm:ss.SSS} %highlight{%-5p}{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=green, DEBUG=cyan, TRACE=blue} [%t] %style{%C{1.}}{bold} : %m%n%ex
+        </Property>
+
+        <!-- File log pattern (no ANSI colors for file output) -->
+        <Property name="FILE_PATTERN">
+            %d{yyyy-MM-dd HH:mm:ss.SSS} %-5p [%t] %c{1} [%M:%L] - %m%n
+        </Property>
+
+        <!-- JSON pattern for structured logging (useful for log aggregators) -->
+        <Property name="JSON_PATTERN">
+            {"timestamp":"%d{ISO8601}","level":"%p","thread":"%t","class":"%c{1}","method":"%M","line":"%L","message":"%enc{%m}{JSON}"}%n
+        </Property>
+    </Properties>
+
+
+    <!-- ============================================================
+         APPENDERS - Define WHERE and HOW logs are output
+         ============================================================ -->
+    <Appenders>
+
+        <!--
+             1. CONSOLE APPENDER
+                Writes colored logs to standard output (stdout)
+         -->
+        <Console name="ConsoleAppender" target="SYSTEM_OUT">
+            <PatternLayout pattern="${CONSOLE_PATTERN}" disableAnsi="false"/>
+            <!--
+                ThresholdFilter: Only log messages at INFO level and above to console.
+                DEBUG/TRACE will NOT appear in console unless overridden per-logger.
+            -->
+            <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+        </Console>
+
+
+        <!--
+             2. ROLLING FILE APPENDER (Application Logs)
+                Writes logs to file, rolling based on size and time.
+                This is the standard production-ready file appender.
+         -->
+        <RollingFile name="RollingFileAppender"
+                     fileName="${LOG_DIR}/${APP_NAME}.log"
+                     filePattern="${LOG_DIR}/${APP_NAME}-%d{yyyy-MM-dd}-%i.log.gz">
+            <!--
+                fileName      : Active log file path
+                filePattern   : Archived file naming pattern
+                                %d{yyyy-MM-dd} = date-based rolling
+                                %i             = index (for same-day multiple rolls)
+                                .gz            = auto-compress archived files
+            -->
+            <PatternLayout pattern="${FILE_PATTERN}"/>
+            <Policies>
+                <!-- Roll over at application startup if file exists -->
+                <OnStartupTriggeringPolicy/>
+
+                <!-- Roll over based on time (daily at midnight) -->
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+
+                <!-- Roll over when file exceeds 10MB -->
+                <SizeBasedTriggeringPolicy size="10MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="30" compressionLevel="9">
+                <!--
+                    max="30"              : Keep at most 30 rolled-over files
+                    compressionLevel="9"  : Maximum GZIP compression
+                -->
+                <!-- Delete logs older than 30 days -->
+                <Delete basePath="${LOG_DIR}" maxDepth="1">
+                    <IfFileName glob="${APP_NAME}-*.log.gz"/>
+                    <IfLastModified age="30d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+
+        <!--
+             4. ASYNC APPENDER
+                Wraps other appenders for non-blocking asynchronous
+                logging. Greatly improves performance under load.
+         -->
+        <Async name="AsyncAppender" bufferSize="8192" includeLocation="true">
+            <!--
+                bufferSize      : Queue size for pending log events
+                includeLocation : Include file/line info (has performance cost)
+            -->
+            <AppenderRef ref="RollingFileAppender"/>
+        </Async>
+    </Appenders>
+
+
+    <!-- ============================================================
+         LOGGERS - Define WHAT gets logged and at what level
+         ============================================================ -->
+    <Loggers>
+
+        <!-- Root application package: DEBUG level for full visibility -->
+        <Logger name="com.example.demo" level="DEBUG" additivity="false">
+            <!--
+                additivity="false" : Don't propagate to parent (Root) logger.
+                                     Prevents duplicate log entries.
+            -->
+            <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="AsyncAppender"/>
+        </Logger>
+
+        <!-- Controller layer: INFO level (request-level info) -->
+        <Logger name="com.example.demo.controller" level="INFO" additivity="false">
+            <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="AsyncAppender"/>
+        </Logger>
+
+        <!-- Service layer: DEBUG level (business logic tracing) -->
+        <Logger name="com.example.demo.service" level="DEBUG" additivity="false">
+            <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="AsyncAppender"/>
+        </Logger>
+
+
+        <!--
+             SPRING FRAMEWORK LOGGERS
+         -->
+
+        <!-- Spring core: WARN level (only problems) -->
+        <Logger name="org.springframework" level="WARN" additivity="false">
+            <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="RollingFileAppender"/>
+        </Logger>
+
+        <!-- ============================================================
+             ROOT LOGGER (catch-all for anything not matched above)
+             ============================================================ -->
+        <Root level="WARN">
+            <!--
+                All unmatched loggers fall here.
+                WARN level to prevent excessive noise from libraries.
+            -->
+            <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="RollingFileAppender"/>
+        </Root>
+
+    </Loggers>
+
+</Configuration>
