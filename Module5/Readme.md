@@ -10,20 +10,14 @@ JMS (Java Message Service) is a Java API that provides a standard way to create,
 
 1. **Point-to-Point (P2P)**: In this pattern, messages are sent from a producer to a specific consumer. Each message is consumed by only one consumer. This is useful for tasks that require a single recipient, such as processing orders or handling requests.
 
-```
-    Producer -> Queue -> Consumer
-```
+<img src="images/p2p.png" width="800" height="400" />
 
 This pattern ensures that messages are processed in a reliable and ordered manner, as each message is consumed by only one consumer. It is often used in scenarios where tasks need to be distributed among multiple workers, such as in a work queue.
 
 
 2. **Publish/Subscribe (Pub/Sub)**: In this pattern, messages are published to a topic, and multiple subscribers can receive the same message. This is useful for broadcasting information to multiple recipients, such as notifications or updates.This pattern allows for a one-to-many communication model, where a single message can be consumed by multiple subscribers. It is often used in scenarios where information needs to be disseminated to multiple recipients, such as in a news feed or event notification system. Here, messages are not guaranteed to be processed in a specific order, as they can be consumed by multiple subscribers independently. This pattern is ideal for scenarios where the same information needs to be shared with multiple recipients, such as in a chat application or a stock price update system.
 
-```
-    Publisher -> Topic -> Subscriber 1
-                       -> Subscriber 2
-                       -> Subscriber 3
-```
+<img src="images/pubsub.png" width="800" height="400" />
 
 Usually the Pub/Sub pattern uses Topics, while the P2P pattern uses Queues. However, some messaging systems may allow for both patterns to be implemented using either topics or queues, depending on the specific requirements of the application.
 
@@ -579,11 +573,9 @@ Caching is a technique used to improve the performance of applications by storin
 
 Redis is an in-memory data structure store that can be used as a cache. It supports various data structures such as strings, hashes, lists, sets, and more. Redis is known for its high performance and scalability, making it a popular choice for caching in modern applications.
 
-Below diagram illustrates how caching with Redis works in a Spring Boot application:
+Below diagram illustrates how caching with Redis works in a Spring Boot application if applied along with database interaction:
 
-```
-    Client -> Spring Boot Application -> Redis Cache
-```
+<img src="images/cache.png" width="1200" height="500" />
 
 Below is an example of how to use Redis for caching in a Spring Boot 3 application:
 
