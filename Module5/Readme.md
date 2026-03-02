@@ -269,6 +269,8 @@ Below diagram depicts the flow of JWT authentication in a REST API:
 4. The client stores the JWT token (e.g., in local storage or a cookie) and includes it in the `Authorization` header of subsequent requests to protected endpoints (e.g., `/hello`).
 5. The server receives the request, extracts the JWT token from the `Authorization` header, and validates it. If the token is valid, the server processes the request and returns the appropriate response. If the token is invalid or expired, the server returns an unauthorized error.
 
+<img src="images/jwt.png" width="800" height="900" />
+
 ### Example using JWT authentication with REST API and Spring Boot 3.
 
 Add the following dependencies to your `pom.xml`:
