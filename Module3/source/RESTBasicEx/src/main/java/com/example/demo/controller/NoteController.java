@@ -22,13 +22,13 @@ public class NoteController {
 
     // GET all books
     @GetMapping
-    public List<Note> getAllBooks() {
+    public List<Note> getAllNotes() {
         return notes;
     }
 
     // GET book by ID
     @GetMapping("/{id}")
-    public Note getBook(@PathVariable Long id) throws NoDataFoundException {
+    public Note getNote(@PathVariable Long id) throws NoDataFoundException {
         Note n = notes.stream()
                     .filter(b -> b.getId().equals(id))
                     .findFirst()
