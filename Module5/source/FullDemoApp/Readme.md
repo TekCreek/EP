@@ -10,7 +10,7 @@
     # Change to the docker folder and run docker compose. 
     cd docker
     
-    Inside the docker folder run docker compose 
+    # Inside the docker folder run docker compose 
     docker compose up --build -d
 ```
 
@@ -54,6 +54,20 @@
     # Get all products (    
     curl -v -X GET http://localhost:8080/api/v1/products -H "Authorization: Bearer $TOKEN"
 ```    
+
+## Get the product with id
+
+Note:- Hit this operation twice, first time you should see the logger
+and the second time you should not as the request is served from the cache.
+
+
+```shell
+    export TOKEN="eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJTYW1wbGUiLCJpYXQiOjE3NzI2ODA3MzgsImV4cCI6MTc3MjY4NDMzOH0.8BflmUuYsmPfz0NULIXoEhWaPTX4zTg1v2VV6EAjohrFFKliIsy9ZwLpf9xP0t9h"
+
+    # Get all products (    
+    curl http://localhost:8080/api/v1/products/1 -H "Authorization: Bearer $TOKEN"
+```    
+
 
 ## Good resource for learning docker 
 

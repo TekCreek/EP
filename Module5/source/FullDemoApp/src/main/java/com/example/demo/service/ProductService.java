@@ -5,8 +5,11 @@ import com.example.demo.model.ProductSearch;
 import com.example.demo.model.ProductVO;
 import com.example.demo.repository.ProductRepository;
 import com.example.demo.util.ObjectTransformer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +17,9 @@ import java.util.Optional;
 
 @Service
 public class ProductService {
+
+    Logger logger = LoggerFactory.getLogger(ProductService.class);
+
     @Autowired
     private ProductRepository productRepository;
 
@@ -56,7 +62,11 @@ public class ProductService {
         productRepository.delete(dbProduct.get());
     }
 
+    @Cacheable(value = "ProductCache", key = "#id")
     public ProductVO find(long id) throws ServiceLayerException {
+
+        logger.info("FINDING THE PRODUCT WITH THE GIVEN ID {} ", id);
+
         Optional<Product> product = productRepository.findById(id);
         if (product.isEmpty()) {
             throw new ServiceLayerException("Invalid product id");

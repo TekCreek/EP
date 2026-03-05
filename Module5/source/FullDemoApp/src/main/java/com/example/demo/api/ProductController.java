@@ -18,14 +18,12 @@ import java.util.List;
 @RequestMapping("/api/v1/products")
 public class ProductController {
 
-    private Logger logger = LoggerFactory.getLogger(ProductController.class);
 
     @Autowired
     private ProductService productService;
 
     @GetMapping
     public List<ProductVO> getAllProducts() {
-        logger.info("Processing get all products request ");
         return productService.findAll();
     }
 
