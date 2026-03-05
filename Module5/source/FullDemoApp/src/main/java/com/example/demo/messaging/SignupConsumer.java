@@ -13,9 +13,12 @@ public class SignupConsumer {
 
     @JmsListener(destination = JMSDestination.SIGNUP_QUEUE)
     public void onMessage(MessageData message) {
-        logger.info("Signup message received : ");
+        logger.info("============================================================");
+        logger.info("Sending EMAIL : ");
+        logger.info("============================================================");
         logger.info("Target Email : {}", message.getTargetEmail());
         logger.info("Subject: {}", message.getSubject());
         logger.info("Content: {}", message.getContent());
+        logger.info("============================================================");
     }
 }

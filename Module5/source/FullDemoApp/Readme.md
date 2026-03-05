@@ -3,7 +3,7 @@
 
 ```shell
     # Clean package creates a jar file in the target folder
-    mvn clean package
+    mvn clean package -Dmaven.test.skip=true
 ```
 
 ```shell

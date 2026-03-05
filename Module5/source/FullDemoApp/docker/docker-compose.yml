@@ -3,12 +3,22 @@ name: ep-stack
 services:
   app:
     build:
-      context: ..
+      context: ..          # points to the parent folder where Dockerfile lives
       dockerfile: Dockerfile
+    image: my-spring-app:latest
+    container_name: my-spring-app
+
     environment:
-      # SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/sampledb
-      # SPRING_DATASOURCE_USERNAME: root
-      # SPRING_DATASOURCE_PASSWORD: password
-      JWT_SECRET: your_jwt_secret_key_2025_used_for_securing_jwt
+      - SPRING_PROFILES_ACTIVE=prod
+      - LOG_PATH=/app/logs          # matches the logback default — explicit is safer
+
     ports:
       - "8080:8080"
+
+    volumes:
+      # Mount  docker/vol/logs  →  /app/logs  inside the container
+      - ./vol/logs:/app/logs
+
+    # Ensure the host folder exists before the container starts
+    # (Docker creates it automatically, but explicit is cleaner in teams)
+    restart: unless-stopped
