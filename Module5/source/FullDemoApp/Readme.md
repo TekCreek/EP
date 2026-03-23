@@ -61,15 +61,17 @@ Note: This step will start the MySQL, Redis and ActiveMQ containers. You can che
 
 6. If this is successful you can terminate the application through ctrl + c.
 
-7. Create a contaner for your application using dockerfile and run the application in the container using the docker-compose.yml in the docker folder. Open terminal and navigate to the docker folder and run the following command to build the image and run the container.
+7. Create a contaner for your application using dockerfile and run the application in the container using the docker-compose.yml in the docker folder. Open terminal and navigate to the docker folder under FullDemoApp folder and run the following command to build the image and run the container.
 
 ```shell
 
-    # Change to the docker folder under Module5
+    # Change to the docker folder under FullDemoApp and run docker compose.
     cd docker
     
     # Build the image and run the container using docker compose
     docker compose up -d --build    
+
+    # The above --build will use the dockerfile to build the image and then run the container. If you make any changes to the code you can use the same command to rebuild the image and restart the container with the new changes.
 
 ```
 
