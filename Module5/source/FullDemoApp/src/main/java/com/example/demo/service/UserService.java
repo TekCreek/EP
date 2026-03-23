@@ -8,6 +8,7 @@ import com.example.demo.util.ObjectTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,14 +33,21 @@ public class UserService {
                 .toList();
     }
 
-    public void saveUser(UserVO userVO) {
+    public void saveUser(UserVO userVO) throws ServiceLayerException {
 
         User userEntity = ObjectTransformer.entityFromModel(userVO);
 
-        // 1. saving to DB
-        userRepository.save(userEntity);
+        try {
+            // TODO: Identify the constraint violation exception and
+            // handle it in a better way.
 
-        // 2. sending notification
-        messageProducer.sendSignupMessage(userVO);
+            // 1. saving to DB
+            userRepository.save(userEntity);
+
+            // 2. sending notification
+            messageProducer.sendSignupMessage(userVO);
+        } catch ( Exception e) {
+            throw new ServiceLayerException("Failed: " + e.getMessage());
+        }
     }
 }
