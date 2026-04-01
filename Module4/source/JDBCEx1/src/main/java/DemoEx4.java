@@ -16,6 +16,7 @@ public class DemoEx4 {
 
         PreparedStatement stmt =
                 con.prepareStatement("select * from account where id = ?");
+
         stmt.setInt(1, id);
         ResultSet rs = stmt.executeQuery();
 

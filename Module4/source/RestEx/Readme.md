@@ -55,7 +55,7 @@ curl -X GET http://localhost:8080/api/v1/products/1
 curl -X POST http://localhost:8080/api/v1/products \
 -H "Content-Type: application/json" \
 -d '{
-  "name": "New Product"-v ,
+  "name": "New Product",
   "price": 19.99
 }'
 ```
@@ -94,7 +94,7 @@ curl -X GET "http://localhost:8080/api/v1/products/sorted?page=0&size=2&sortBy=p
 ``` 
 
 ```bash
-curl -X GET "http://localhost:8080/api/v1/products/sorted?page=0&size=2&sortBy=name&direction=ASC"
+curl -X GET "http://localhost:8080/api/v1/products/sorted?page=0&size=2&sortBy=price&direction=ASC"
 ``` 
 
 ```bash

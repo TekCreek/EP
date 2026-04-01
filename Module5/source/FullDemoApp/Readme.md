@@ -55,7 +55,7 @@ Note: This step will start the MySQL, Redis and ActiveMQ containers. You can che
     # Create a new user 
     curl -X POST http://localhost:8080/api/v1/users/signup \
      -H "Content-Type: application/json" \
-     -d '{"username":"Demo1","email":"demo1@test.com", "password":"123456"}' 
+     -d '{"username":"Demo3","email":"demo3@test.com", "password":"123456"}' 
     
 ```
 
@@ -107,7 +107,7 @@ Note: Check the log in the container to see the signup email log demonstrating t
 3. Replace the below token with the token obtained after login and use it for authentication in the subsequent requests. 
 
 ```shell
-    export TOKEN="eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJTYW1wbGUiLCJpYXQiOjE3NzIxNzgwNTEsImV4cCI6MTc3MjE4MTY1MX0.7PDOxgM9u-4sMLftytFx2yAZIscpTyx8j16HBFvwcIg"
+    export TOKEN="eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJTYW1wbGUiLCJpYXQiOjE3NzQ2MjY2MzEsImV4cCI6MTc3NDYzMDIzMX0.OKc7TTRIQHDILnBRiF0rmm1bH91a9kxzNMrhQSa4MYMBgWLenL04VbxAnQDZ-7wT"
      
     # Get all users (authentication required use the token obtained after login
       

@@ -9,24 +9,24 @@ public class DemoEx2 {
         Class.forName("com.mysql.cj.jdbc.Driver");
 
         // 2. Establish connection
-        Connection con = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/DemoDB?useSSL=false&allowPublicKeyRetrieval=true","demoUser", "demoPwd");
+        try (Connection con = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/DemoDB?useSSL=false&allowPublicKeyRetrieval=true","demoUser", "demoPwd")) {
 
-        // 3. Statement
-        Statement st = con.createStatement();
+            // 3. Statement
+            Statement st = con.createStatement();
 
-        // 4. Execute the command
-        ResultSet rs = st.executeQuery("select * from account");
+            // 4. Execute the command
+            ResultSet rs = st.executeQuery("select * from account");
 
-        // Retrieving field values using column names.
-        while (rs.next()) {
-            int id = rs.getInt("id");
-            String name = rs.getString("name");
-            double balance = rs.getDouble("balance");
+            // Retrieving field values using column names.
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                double balance = rs.getDouble("balance");
 
-            System.out.printf("id :%d , name: %s, balance: %f %n", id, name, balance);
+                System.out.printf("id :%d , name: %s, balance: %f %n", id, name, balance);
+            }
         }
 
-        con.close();
     }
 }

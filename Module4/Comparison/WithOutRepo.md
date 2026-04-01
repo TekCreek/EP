@@ -1,18 +1,17 @@
-package com.example.jdbcdemo.repository;
+
+                        WITH JDBC 
+                        
+```java
+
+public class Account {
+    private Integer id;
+    private String name;
+    private double balance;
+
+}
 
 
-import com.example.jdbcdemo.domain.Account;
-import org.apache.commons.dbcp2.BasicDataSource;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-
-// ORM - Hibernate, JPA
-// Object Relational Mapping
-// Account  <--------> table 'account'
-//  obj     <-------->   record
-public class AccountRepository {
+public class AccountDAO {
 
     public Account findById(int id) throws Exception {
         Connection con = null;
@@ -90,3 +89,5 @@ public class AccountRepository {
         return dataSource.getConnection();
     }
 }
+
+```

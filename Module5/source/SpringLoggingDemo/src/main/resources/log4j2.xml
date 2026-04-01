@@ -155,7 +155,7 @@
         </Logger>
 
         <!-- Controller layer: INFO level (request-level info) -->
-        <Logger name="com.example.demo.controller" level="INFO" additivity="false">
+        <Logger name="com.example.demo.controller" level="WARN" additivity="false">
             <AppenderRef ref="ConsoleAppender"/>
             <AppenderRef ref="AsyncAppender"/>
         </Logger>
